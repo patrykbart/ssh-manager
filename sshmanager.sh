@@ -1,5 +1,19 @@
 #!/bin/bash
 
+function print_help()
+{
+  echo
+  echo "sshmanager - manage your SSH servers easily in terminal."
+  echo
+  echo "COMMANDS:"
+  echo "    list        Take a look at all of your saved SSH connections."
+  echo "    add         Add new SSH connection."
+  echo "    remove      Remove existing SSH connection."
+  echo "    update      Update existing SSH connection."
+  echo
+  echo "Author:     Patryk Bartkowiak."
+}
+
 function print_menu()  # size, selected_item, ...name, ...address
 {
 	local function_arguments=($@)
@@ -189,7 +203,10 @@ declare -a name=( $(cut -d " " -f1 $HOME/.sshrc) )
 declare -a user=( $(cut -d " " -f2 $HOME/.sshrc) )
 declare -a address=( $(cut -d " " -f3 $HOME/.sshrc) )
 
-if [ "$1" = "list" ] ; then
+
+if [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ] ; then
+  print_help
+elif [ "$1" = "list" ] ; then
   list_connections "${#name[@]}" "${name[@]}" "${address[@]}"
 elif [ "$1" = "add" ] ; then
   add_connection "${#name[@]}" "${name[@]}"
